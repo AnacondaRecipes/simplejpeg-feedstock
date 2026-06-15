@@ -30,12 +30,12 @@ requirements:
     - python
     - cython >=3.1.0,<3.2
     - pip
-    - numpy
+    - numpy {{ numpy }}
     - setuptools >=77.0.0
-    - libjpeg-turbo
+    - libjpeg-turbo {{ libjpeg_turbo }}
   run:
     - python
-    - numpy {{ numpy }}
+    - numpy
 
 test:
   source_files:
