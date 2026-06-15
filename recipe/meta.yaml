@@ -15,9 +15,9 @@ build:
   number: 0
   script:
     - cp ${RECIPE_DIR}/setup.py .  # [unix]
-    - python -m pip install . -vv  # [unix]
+    - python -m pip install . --no-deps --ignore-installed --no-build-isolation -vv  # [unix]
     - copy %RECIPE_DIR%\setup.py . # [win]
-    - python -m pip install . -vv  # [win]
+    - python -m pip install . --no-deps --ignore-installed --no-build-isolation -vv  # [win]
 
 requirements:
   build:
