@@ -1,0 +1,65 @@
+{% set version = "1.9.0" %}
+{% set name = "simplejpeg" %}
+
+
+package:
+  name: {{ name }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 5ac7d9489eeb812c2e7ea5c283994a29d9fefdfe5ed7b86c09d485e0dd366689
+
+build:
+  skip: true # [py<39]
+  number: 0
+  script:
+    - cp ${RECIPE_DIR}/setup.py .  # [unix]
+    - python -m pip install . -vv  # [unix]
+    - copy %RECIPE_DIR%\setup.py . # [win]
+    - python -m pip install . -vv  # [win]
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    - {{ stdlib('c') }}
+    - cmake
+    - make         # [unix]
+  host:
+    - python
+    - cython
+    - pip
+    - numpy
+    - setuptools >=74.1.1
+    - libjpeg-turbo
+  run:
+    - python
+    - numpy >=1.19.3
+
+test:
+  source_files:
+    - test
+  imports:
+    - simplejpeg
+  commands:
+    - pip check
+    - pytest -vvv
+  requires:
+    - pip
+    - pytest
+    - pillow
+
+about:
+  home: https://github.com/jfolz/simplejpeg
+  summary: simplejpeg is a simple package based on recent versions of libturbojpeg for fast JPEG encoding and decoding.
+  description: simplejpeg is a simple package based on recent versions of libturbojpeg for fast JPEG encoding and decoding.
+  license: MIT
+  license_family: MIT
+  license_file: LICENSE
+  dev_url: https://github.com/jfolz/simplejpeg
+  doc_url: https://github.com/jfolz/simplejpeg/blob/master/README.rst
+
+extra:
+  recipe-maintainers:
+    - carlodri
